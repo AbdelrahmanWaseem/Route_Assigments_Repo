@@ -1,8 +1,9 @@
-// const fs = require("node:fs");
+const fs = require("node:fs");
 // const fs = reqire("node:fs/promises");
 const path = require("node:path");
 const { EventEmitter } = require("node:stream");
 const os = require("node:os");
+const { log } = require("node:console");
 
 //Q1: const filePath =
 //   "D:/01 - Development/Git Repositories/Route_Assigments_Repo/Assigment 2";
@@ -148,3 +149,51 @@ const os = require("node:os");
 // deviceSpecs();
 // ---------------------------------------------------------------------------------------------
 
+//Q18: const stream = fs.createReadStream("./big.txt", {
+//   highWaterMark: 100,
+//   encoding: "utf-8",
+// });
+// stream.on("data", (chunk) => {
+//   console.log(chunk);
+// });
+
+// stream.on("error", (err) => {
+//   console.log(err);
+// });
+
+// stream.on("end", () => {
+//   console.log("end");
+// });
+// ---------------------------------------------------------------------------------------------
+
+//Q19: const readStream = fs.createReadStream("./source.txt", {
+//   encoding: "utf-8",
+//   autoClose: false,
+//   emitClose: false,
+// });
+
+// const writeStream = fs.createWriteStream("./dest.txt");
+
+// readStream.pipe(writeStream);
+
+// writeStream.on("finish", () => {
+//   console.log("finish");
+// });
+// --------------------------------------------------------------------------------------------
+
+//Q20: const zlib = require("zlib");
+// const { pipeline } = require("stream");
+
+// const readStream = fs.createReadStream("./data.txt", {
+//   encoding: "utf-8",
+// });
+
+// const gzip = zlib.createGzip();
+// const writeStreamGzip = fs.createWriteStream("./dataWrite.gz");
+
+// pipeline(readStream, gzip, writeStreamGzip, (err) => {
+//   if (err) {
+//     console.log("pipeline failed:", err);
+//   }
+// });
+// ----------------------------------------------------------------------------------------------
