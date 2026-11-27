@@ -197,3 +197,156 @@ const { log } = require("node:console");
 //   }
 // });
 // ----------------------------------------------------------------------------------------------
+// CRUD OPERATIONS QUESTIONS:
+
+// Q1: const user = {
+//   id: 1,
+//   name: "waseem",
+//   email: "abcdef@gmail.com",
+// };
+
+// const http = require("node:http");
+
+// const port = 8000;
+
+// const server = http.createServer((req, res) => {
+//   const { url, method } = req;
+
+//   if (url === "/user" && method === "POST") {
+//     let data = "";
+
+//     req.on("data", (chunk) => {
+//       data += chunk;
+//     });
+
+//     req.on("end", () => {
+//       const newUser = JSON.parse(data);
+
+//       const fileData = fs.readFileSync("./users.json", "utf-8");
+//       const users = JSON.parse(fileData);
+
+//       const emailExists = users.some((user) => user.email === newUser.email);
+
+//       res.setHeader("Content-Type", "application/json");
+
+//       if (emailExists) {
+//         res.statusCode = 400; // Bad Request
+//         return res.end(JSON.stringify({ message: "Email already exists." }));
+//       }
+
+//       users.push(newUser);
+//       fs.writeFileSync("./users.json", JSON.stringify(users, null, 2));
+
+//       res.statusCode = 201; 
+//       res.end(JSON.stringify({ message: "User added successfully." }));
+//     });
+//   } else {
+//     res.statusCode = 404;
+//     res.end(JSON.stringify({ message: "Route not found" }));
+//   }
+// });
+
+// server.listen(port, () => {
+//   console.log("server is running.........");
+// });
+// -------------------------------------------------------------    
+// // const http = require("node:http");
+// const fs = require("node:fs");
+
+// const port = 8000;
+
+// const server = http.createServer((req, res) => {
+//   const { url, method } = req;
+//   res.setHeader("Content-Type", "application/json");
+
+//   if (url === "/user" && method === "POST") {
+//     let data = "";
+//     req.on("data", (chunk) => {
+//       data += chunk;
+//     });
+
+//     req.on("end", () => {
+//       const newUser = JSON.parse(data);
+//       const users = JSON.parse(fs.readFileSync("./users.json", "utf-8"));
+
+//       const emailExists = users.some((user) => user.email === newUser.email);
+//       if (emailExists) {
+//         res.statusCode = 400;
+//         return res.end(JSON.stringify({ message: "Email already exists." }));
+//       }
+
+//       const id = users.length > 0 ? users[users.length - 1].id + 1 : 1;
+//       users.push({ id, ...newUser });
+//       fs.writeFileSync("./users.json", JSON.stringify(users, null, 2));
+
+//       res.statusCode = 201;
+//       res.end(JSON.stringify({ message: "User added successfully." }));
+//     });
+//   } else if (url.startsWith("/user/") && method === "PATCH") {
+//     const id = parseInt(url.split("/")[2]);
+//     let data = "";
+//     req.on("data", (chunk) => {
+//       data += chunk;
+//     });
+
+//     req.on("end", () => {
+//       const updates = JSON.parse(data);
+//       const users = JSON.parse(fs.readFileSync("./users.json", "utf-8"));
+//       const userIndex = users.findIndex((user) => user.id === id);
+
+//       if (userIndex === -1) {
+//         res.statusCode = 404;
+//         return res.end(JSON.stringify({ message: "User ID not found." }));
+//       }
+
+//       users[userIndex] = { ...users[userIndex], ...updates };
+//       fs.writeFileSync("./users.json", JSON.stringify(users, null, 2));
+
+//       const updatedField = Object.keys(updates)[0];
+//       res.statusCode = 200;
+//       res.end(
+//         JSON.stringify({
+//           message: `User ${updatedField} updated successfully.`,
+//         })
+//       );
+//     });
+//   } else if (url.startsWith("/user/") && method === "DELETE") {
+//     const id = parseInt(url.split("/")[2]);
+//     const users = JSON.parse(fs.readFileSync("./users.json", "utf-8"));
+//     const userIndex = users.findIndex((user) => user.id === id);
+
+//     if (userIndex === -1) {
+//       res.statusCode = 404;
+//       return res.end(JSON.stringify({ message: "User ID not found." }));
+//     }
+
+//     users.splice(userIndex, 1);
+//     fs.writeFileSync("./users.json", JSON.stringify(users, null, 2));
+
+//     res.statusCode = 200;
+//     res.end(JSON.stringify({ message: "User deleted successfully." }));
+//   } else if (url === "/user" && method === "GET") {
+//     const users = JSON.parse(fs.readFileSync("./users.json", "utf-8"));
+//     res.statusCode = 200;
+//     res.end(JSON.stringify(users));
+//   } else if (url.startsWith("/user/") && method === "GET") {
+//     const id = parseInt(url.split("/")[2]);
+//     const users = JSON.parse(fs.readFileSync("./users.json", "utf-8"));
+//     const user = users.find((user) => user.id === id);
+
+//     if (!user) {
+//       res.statusCode = 404;
+//       return res.end(JSON.stringify({ message: "User not found." }));
+//     }
+
+//     res.statusCode = 200;
+//     res.end(JSON.stringify(user));
+//   } else {
+//     res.statusCode = 404;
+//     res.end(JSON.stringify({ message: "Route not found" }));
+//   }
+// });
+
+// server.listen(port, () => {
+//   console.log("server is running.........");
+// });
